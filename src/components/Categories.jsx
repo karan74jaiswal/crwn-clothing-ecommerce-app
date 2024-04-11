@@ -1,4 +1,5 @@
 import Category from "./Category";
+import "./categories.styles.scss";
 const Categories = function () {
   const categories = [
     {

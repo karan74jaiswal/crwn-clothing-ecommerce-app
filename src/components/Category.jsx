@@ -1,6 +1,8 @@
+import "./categories.styles.scss";
+import { Link } from "react-router-dom";
 const Category = function ({ category }) {
   return (
-    <div className="category-container">
+    <Link to={`/shop/${category.title}`} className="category-container">
       <div
         className="background-image"
         style={{
@@ -11,7 +13,7 @@ const Category = function ({ category }) {
         <h2>{category.title}</h2>
         <p>Shop Now</p>
       </div>
-    </div>
+    </Link>
   );
 };
 
