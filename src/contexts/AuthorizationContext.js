@@ -6,22 +6,37 @@ import {
   addUser,
   getAllUsersData,
   getUserData,
+  getRedirectAuthResult,
+  emailSignup,
+  emailSignIn,
 } from "../utils/firebase";
 const AuthorizationContext = createContext();
 
 function AuthorizationProvider({ children }) {
-  const [userObject, setUserObject] = useState(null);
+  const [userAuthObject, setUserAuthObject] = useState(null);
+  const [userData, setUserData] = useState(null);
+
+  const signUserOut = async function () {
+    await signOut(auth);
+    setUserAuthObject(null);
+    setUserData(null);
+  };
   return (
     <AuthorizationContext.Provider
       value={{
         signInWithGoogle,
-        userObject,
-        setUserObject,
+        userAuthObject,
+        setUserAuthObject,
         auth,
         addUser,
-        signOut,
+        signUserOut,
         getAllUsersData,
         getUserData,
+        getRedirectAuthResult,
+        userData,
+        setUserData,
+        emailSignup,
+        emailSignIn,
       }}
     >
       {children}

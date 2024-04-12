@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { initializeApp } from "firebase/app";
 import {
   getFirestore,
@@ -11,9 +12,12 @@ import {
 import {
   getAuth,
   signInWithRedirect,
+  getRedirectResult,
   signInWithPopup,
   GoogleAuthProvider,
   signOut,
+  createUserWithEmailAndPassword,
+  signInWithEmailAndPassword,
 } from "firebase/auth";
 
 const firebaseConfig = {
@@ -36,26 +40,34 @@ const db = getFirestore(firebaseApp);
 
 // Creating a Google Provider
 const googleProvider = new GoogleAuthProvider();
+
 googleProvider.setDefaultLanguage("en");
 googleProvider.setCustomParameters({
   prompt: "select_account",
 });
 
-// Telling Google Provider, How will it behave
-const signInWithGoogle = () => signInWithPopup(auth, googleProvider);
+// Telling Google Provider, How will it behave --- SignIn with Popup
+// const signInWithGoogle = () => signInWithPopup(auth, googleProvider);
 
+// Signing in with Redirect
+const signInWithGoogle = () => signInWithRedirect(auth, googleProvider);
+
+const getRedirectAuthResult = async function () {
+  const result = await getRedirectResult(auth);
+  return result;
+};
 // Creating Documents
-const addUser = async (userAuthData) => {
+const addUser = async (userAuthData, additionalData) => {
+  if (!userAuthData) return;
   const userData = {
     displayName: userAuthData.user.displayName,
-    firstName: userAuthData.user.displayName.split(" ")[0],
-    lastName: userAuthData.user.displayName.split(" ")[1],
     email: userAuthData.user.email,
     uid: userAuthData.user.uid,
     phoneNumber: userAuthData.user.phoneNumber,
     photo: userAuthData.user.photoURL,
     provider: userAuthData.providerId,
     createdAt: new Date(),
+    ...additionalData,
   };
   const collectionRef = collection(db, "users");
   try {
@@ -75,12 +87,23 @@ const getAllUsersData = async () => {
 const getUserData = async function (userAuthData) {
   const collectionRef = collection(db, "users");
   const documentReference = doc(collectionRef, userAuthData.user.uid);
-  const documentSnapshot = await getDoc(documentReference);
+  let documentSnapshot = await getDoc(documentReference);
   if (!documentSnapshot.exists()) {
     await addUser(userAuthData);
-    return (await getDoc(documentReference)).data();
+    documentSnapshot = await getDoc(documentReference);
   }
+  await setDoc(documentReference, { lastLogin: new Date() }, { merge: true });
   return documentSnapshot.data();
+};
+
+const emailSignup = async (email, password, additionalData) => {
+  const newUser = await createUserWithEmailAndPassword(auth, email, password);
+  await addUser(newUser, additionalData);
+};
+
+const emailSignIn = async function (email, password) {
+  const userAuth = await signInWithEmailAndPassword(auth, email, password);
+  return userAuth;
 };
 
 export {
@@ -90,4 +113,7 @@ export {
   addUser,
   getAllUsersData,
   getUserData,
+  getRedirectAuthResult,
+  emailSignup,
+  emailSignIn,
 };
