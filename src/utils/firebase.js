@@ -1,9 +1,7 @@
-import { useEffect } from "react";
 import { initializeApp } from "firebase/app";
 import {
   getFirestore,
   collection,
-  addDoc,
   getDocs,
   getDoc,
   doc,
@@ -13,7 +11,6 @@ import {
   getAuth,
   signInWithRedirect,
   getRedirectResult,
-  signInWithPopup,
   GoogleAuthProvider,
   signOut,
   createUserWithEmailAndPassword,
@@ -51,7 +48,6 @@ googleProvider.setCustomParameters({
 
 // Signing in with Redirect
 const signInWithGoogle = () => signInWithRedirect(auth, googleProvider);
-
 const getRedirectAuthResult = async function () {
   const result = await getRedirectResult(auth);
   return result;
