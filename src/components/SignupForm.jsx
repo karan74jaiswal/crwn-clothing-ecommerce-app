@@ -59,7 +59,9 @@ function SignupForm() {
         value={signUpFormFields.retypedPassword}
         handleChange={handleChange}
       />
-      <Button type="submit">Sign up</Button>
+      <div className="buttons-container">
+        <Button type="submit">Sign up</Button>
+      </div>
     </AuthenticationForm>
   );
 }

@@ -27,6 +27,10 @@ function SigninForm() {
     } catch (err) {
       if (err.code === "auth/invalid-credential")
         alert("Invalid Credentials, Try Again");
+      if (err.code === "auth/user-not-found")
+        alert("User with this email Not Found");
+      if (err.code === "auth/wrong-password")
+        alert("Invalid Password, Try Again");
       else {
         console.log(err.message);
       }
@@ -34,9 +38,9 @@ function SigninForm() {
     }
   };
 
-  const handleGoogleSignin = (e) => {
+  const handleGoogleSignin = async (e) => {
     e.preventDefault();
-    signInWithGoogle();
+    await signInWithGoogle();
   };
   return (
     <AuthenticationForm
@@ -58,9 +62,13 @@ function SigninForm() {
         value={signInFormFields.password}
         handleChange={handleChange}
       />
-      <div>
+      <div className="buttons-container">
         <Button type="submit">Sign In</Button>
-        <Button onClick={handleGoogleSignin} className="google-sign-in">
+        <Button
+          type="button"
+          onClick={handleGoogleSignin}
+          className="google-sign-in"
+        >
           Sign In With Google
         </Button>
       </div>

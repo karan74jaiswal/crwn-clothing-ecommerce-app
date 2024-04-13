@@ -3,7 +3,7 @@ import { useAuth } from "../contexts/AuthorizationContext";
 import { useEffect } from "react";
 import SignupForm from "../components/SignupForm";
 import SigninForm from "../components/SigninForm";
-
+import "./signin.scss";
 function Signin() {
   const {
     userAuthObject,
@@ -37,7 +37,7 @@ function Signin() {
   ]);
 
   return (
-    <div>
+    <div className="authentication-container">
       <SigninForm />
       <SignupForm />
     </div>
