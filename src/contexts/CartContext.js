@@ -1,14 +1,54 @@
 import { createContext, useContext, useState } from "react";
 
+const addCartItem = function (cartItems, itemToAdd) {
+  const doesItemExists = cartItems.some(
+    (cartItem) => cartItem.id === itemToAdd.id
+  );
+  if (!doesItemExists) return [...cartItems, { ...itemToAdd, quantity: 1 }];
+
+  return cartItems.map((cartItem) =>
+    cartItem.id === itemToAdd.id
+      ? { ...cartItem, quantity: cartItem.quantity + 1 }
+      : cartItem
+  );
+};
 const CartContext = createContext({
   cartItems: [],
   setCartItems: () => null,
   isCartVisible: false,
-  setIsCartVisible: () => null,
+  toggleCartOpen: () => null,
+  addToCart: () => {},
+  increaseQuantity: () => {},
+  decreaseQuantity: () => {},
+  removeItem: () => {},
 });
 function CartProvider({ children }) {
   const [cartItems, setCartItems] = useState([]);
   const [isCartVisible, setIsCartVisible] = useState(false);
+  const addToCart = function (item) {
+    setCartItems(addCartItem(cartItems, item));
+  };
+
+  const increaseQuantity = (item) => {
+    addToCart(item);
+  };
+  const decreaseQuantity = (item) => {
+    if (item.quantity > 1) {
+      setCartItems((existingItems) =>
+        existingItems.map((existingItem) =>
+          existingItem.id === item.id
+            ? { ...existingItem, quantity: existingItem.quantity - 1 }
+            : existingItem
+        )
+      );
+    } else removeItem(item.id);
+  };
+
+  const removeItem = (itemId) => {
+    setCartItems((existingItems) =>
+      [...existingItems].filter((existingItem) => existingItem.id !== itemId)
+    );
+  };
 
   const toggleCartOpen = () => setIsCartVisible((v) => !v);
   return (
@@ -18,6 +58,10 @@ function CartProvider({ children }) {
         setCartItems,
         isCartVisible,
         toggleCartOpen,
+        addToCart,
+        increaseQuantity,
+        decreaseQuantity,
+        removeItem,
       }}
     >
       {children}

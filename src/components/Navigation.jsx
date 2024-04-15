@@ -4,7 +4,6 @@ import { useAuth } from "../contexts/AuthorizationContext";
 import { ReactComponent as CrownLogo } from "../assets/crown.svg";
 import CartDropDown from "./CartDropDown";
 import CartIcon from "./CartIcon";
-import { useState } from "react";
 
 export default function Navigation() {
   const { userAuthObject, signUserOut, userData } = useAuth();

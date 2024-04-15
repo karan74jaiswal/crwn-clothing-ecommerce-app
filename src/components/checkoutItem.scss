@@ -1,0 +1,23 @@
+.item-container {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: black solid 1px;
+  padding-bottom: 15px;
+  width: 55%;
+  margin-top: 30px;
+  align-items: center;
+
+  span {
+    display: flex;
+    justify-content: center;
+    width: 70%;
+    img {
+      width: 80%;
+    }
+    button {
+      background: none;
+      border: none;
+      cursor: pointer;
+    }
+  }
+}

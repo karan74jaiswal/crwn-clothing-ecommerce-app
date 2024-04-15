@@ -1,0 +1,10 @@
+.checkout-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  .bill-container {
+    align-self: flex-end;
+    width: 32%;
+  }
+}
