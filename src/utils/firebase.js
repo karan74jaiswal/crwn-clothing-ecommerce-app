@@ -15,6 +15,7 @@ import {
   signOut,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
+  onAuthStateChanged,
 } from "firebase/auth";
 
 const firebaseConfig = {
@@ -49,18 +50,18 @@ googleProvider.setCustomParameters({
 // Signing in with Redirect
 const signInWithGoogle = () => signInWithRedirect(auth, googleProvider);
 const getRedirectAuthResult = async function () {
-  const result = await getRedirectResult(auth);
-  return result;
+  const user = await getRedirectResult(auth);
+  return user;
 };
 // Creating Documents
 const addUser = async (userAuthData, additionalData) => {
   if (!userAuthData) return;
   const userData = {
-    displayName: userAuthData.user.displayName,
-    email: userAuthData.user.email,
-    uid: userAuthData.user.uid,
-    phoneNumber: userAuthData.user.phoneNumber,
-    photo: userAuthData.user.photoURL,
+    displayName: userAuthData.displayName,
+    email: userAuthData.email,
+    uid: userAuthData.uid,
+    phoneNumber: userAuthData.phoneNumber,
+    photo: userAuthData.photoURL,
     provider: userAuthData.providerId,
     createdAt: new Date(),
     ...additionalData,
@@ -82,7 +83,7 @@ const getAllUsersData = async () => {
 // Getting a single Document Data
 const getUserData = async function (userAuthData) {
   const collectionRef = collection(db, "users");
-  const documentReference = doc(collectionRef, userAuthData.user.uid);
+  const documentReference = doc(collectionRef, userAuthData.uid);
   let documentSnapshot = await getDoc(documentReference);
   if (!documentSnapshot.exists()) {
     await addUser(userAuthData);
@@ -92,9 +93,9 @@ const getUserData = async function (userAuthData) {
   return documentSnapshot.data();
 };
 
-const emailSignup = async (email, password, additionalData) => {
+const emailSignup = async (email, password) => {
   const newUser = await createUserWithEmailAndPassword(auth, email, password);
-  await addUser(newUser, additionalData);
+  return newUser;
 };
 
 const emailSignIn = async function (email, password) {
@@ -102,6 +103,8 @@ const emailSignIn = async function (email, password) {
   return userAuth;
 };
 
+const authStateChangeListener = (observerCallback) =>
+  onAuthStateChanged(auth, observerCallback);
 export {
   auth,
   signInWithGoogle,
@@ -112,4 +115,5 @@ export {
   getRedirectAuthResult,
   emailSignup,
   emailSignIn,
+  authStateChangeListener,
 };

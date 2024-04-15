@@ -7,8 +7,8 @@ import Hats from "./components/Hats";
 import { AuthorizationProvider } from "./contexts/AuthorizationContext";
 function App() {
   return (
-    <AuthorizationProvider>
-      <BrowserRouter>
+    <BrowserRouter>
+      <AuthorizationProvider>
         <Routes>
           <Route path="/" element={<AppLayout />}>
             <Route index element={<Categories />} />
@@ -21,8 +21,8 @@ function App() {
             />
           </Route>
         </Routes>
-      </BrowserRouter>
-    </AuthorizationProvider>
+      </AuthorizationProvider>
+    </BrowserRouter>
   );
 }
 

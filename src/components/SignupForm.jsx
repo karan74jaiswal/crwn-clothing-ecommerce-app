@@ -14,8 +14,8 @@ function SignupForm() {
     if (password.length < 4) return;
     if (password !== retypedPassword) return;
     try {
-      const userAuth = await emailSignup(email, password, { displayName });
-      await addUser(userAuth, { displayName });
+      const { user } = await emailSignup(email, password);
+      await addUser(user, { displayName });
     } catch (err) {
       if (err.code === "auth/email-already-in-use")
         alert("Email already exists, Try to sign-in with right credentials");

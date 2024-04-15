@@ -4,13 +4,7 @@ import useReducers from "../hooks/reducers/useReducers";
 import FileInput from "./FileInput";
 import { useAuth } from "../contexts/AuthorizationContext";
 function SigninForm() {
-  const {
-    signInWithGoogle,
-    setUserAuthObject,
-    setUserData,
-    getUserData,
-    emailSignIn,
-  } = useAuth();
+  const { signInWithGoogle, emailSignIn } = useAuth();
   const { signInFormFields, handleChange, signinFormReset } = useReducers();
   const handleSigninFormSubmit = async function (e) {
     e.preventDefault();
@@ -19,11 +13,8 @@ function SigninForm() {
     if (!email.endsWith(".com") || !email.includes("@")) return;
     if (password.length < 4) return;
     try {
-      const userAuth = await emailSignIn(email, password);
-      if (userAuth) signinFormReset();
-      setUserAuthObject(userAuth);
-      const data = await getUserData(userAuth);
-      setUserData(data);
+      await emailSignIn(email, password);
+      signinFormReset();
     } catch (err) {
       if (err.code === "auth/invalid-credential")
         alert("Invalid Credentials, Try Again");

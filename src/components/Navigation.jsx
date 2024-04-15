@@ -1,15 +1,10 @@
 import "./navigation.styles.scss";
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { useAuth } from "../contexts/AuthorizationContext";
 
 export default function Navigation() {
-  const navigate = useNavigate();
   const { userAuthObject, signUserOut, userData } = useAuth();
 
-  const handleSignOut = () => {
-    signUserOut();
-    navigate("/");
-  };
   return (
     <nav className="navigation">
       <NavLink to="/" className="logo-container">
@@ -25,11 +20,11 @@ export default function Navigation() {
             SIGN IN
           </NavLink>
         ) : (
-          <span className="nav-link" onClick={handleSignOut}>
+          <span className="nav-link" onClick={signUserOut}>
             SIGN OUT
           </span>
         )}
-        {userData ? <p>{userData.displayName}</p> : ""}
+        {userData ? <p className="nav-link">{userData.displayName}</p> : ""}
       </div>
     </nav>
   );
