@@ -1,31 +1,36 @@
 import { useCart } from "../contexts/CartContext";
 import "./checkoutItem.scss";
-function CheckoutItem({ item }) {
+function CheckoutItem({ item, className }) {
   const { increaseQuantity, decreaseQuantity, removeItem } = useCart();
   return (
-    <div className="item-container">
+    <div className={className || "item-container"}>
       {!item ? (
         <>
-          <span>Product</span>
-          <span>Description</span>
-          <span>Quantity</span>
-          <span>Price</span>
-          <span>Remove</span>
+          <span className="header-block">Product</span>
+          <span className="header-block">Description</span>
+          <span className="header-block">Quantity</span>
+          <span className="header-block">Price</span>
+          <span className="header-block">Remove</span>
         </>
       ) : (
         <>
-          <span>
+          <span className="image-container">
             <img src={item.imageUrl} alt={item.name} />
           </span>
-          <span>{item.name}</span>
-          <span>
-            <button onClick={() => decreaseQuantity(item)}>◀</button>
-            <span>{item.quantity}</span>
-            <button onClick={() => increaseQuantity(item)}>▶</button>
+          <span className="name">{item.name}</span>
+          <span className="quantity">
+            <span className="arrow" onClick={() => decreaseQuantity(item)}>
+              &#10094;
+            </span>
+            <span className="value">{item.quantity}</span>
+            <span className="arrow" onClick={() => increaseQuantity(item)}>
+              &#10095;
+            </span>
           </span>
-          <span>{item.price}</span>
-          <span>
-            <button onClick={() => removeItem(item.id)}>X</button>
+          <span className="price">{item.price}</span>
+
+          <span className="remove-button" onClick={() => removeItem(item.id)}>
+            &#10005;
           </span>
         </>
       )}

@@ -10,17 +10,15 @@ function Checkout() {
   if (!user) return <Navigate to="/signin" replace />;
   return (
     <div className="checkout-container">
-      <CheckoutItem key="user123" />
+      <CheckoutItem key="user123" className="checkout-header" />
       {cartItems.map((item) => (
         <CheckoutItem item={item} key={item.id} />
       ))}
       <div className="bill-container">
-        <h2>
-          TOTAL: $
-          {cartItems.reduce((acc, item) => acc + item.quantity * item.price, 0)}
-        </h2>
-        <Button>Pay Now</Button>
+        TOTAL: $
+        {cartItems.reduce((acc, item) => acc + item.quantity * item.price, 0)}
       </div>
+      <Button>Pay Now</Button>
     </div>
   );
 }
