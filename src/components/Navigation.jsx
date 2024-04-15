@@ -2,6 +2,10 @@ import "./navigation.styles.scss";
 import { NavLink } from "react-router-dom";
 import { useAuth } from "../contexts/AuthorizationContext";
 import { ReactComponent as CrownLogo } from "../assets/crown.svg";
+import CartDropDown from "./CartDropDown";
+import CartIcon from "./CartIcon";
+import { useState } from "react";
+
 export default function Navigation() {
   const { userAuthObject, signUserOut, userData } = useAuth();
 
@@ -25,7 +29,9 @@ export default function Navigation() {
           </span>
         )}
         {userData ? <p className="nav-link">{userData.displayName}</p> : ""}
+        <CartIcon />
       </div>
+      <CartDropDown />
     </nav>
   );
 }
