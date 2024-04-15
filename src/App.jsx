@@ -3,7 +3,7 @@ import AppLayout from "./pages/AppLayout";
 import Categories from "./components/Categories";
 import Signin from "./pages/Signin";
 import Shop from "./pages/Shop";
-import Hats from "./components/Hats";
+import Section from "./components/Section";
 import { AuthorizationProvider } from "./contexts/AuthorizationContext";
 function App() {
   return (
@@ -14,7 +14,7 @@ function App() {
             <Route index element={<Categories />} />
             <Route path="signin" element={<Signin />} />
             <Route path="shop" element={<Shop />} />
-            <Route path="shop/:category" element={<Hats />} />
+            <Route path="shop/:category" element={<Section />} />
             <Route
               path="*"
               element={<h1>Error 404 ----- Page does not exist</h1>}
