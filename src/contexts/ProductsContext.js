@@ -1,6 +1,9 @@
 import { useContext, createContext, useState, useEffect } from "react";
 import * as shopData from "../data/shop-data.json";
-import { addCollectionAndDocuments } from "../utils/firebase";
+import {
+  addCollectionAndDocuments,
+  getCategoriesAndDocuments,
+} from "../utils/firebase";
 
 const ProductsContext = createContext({
   products: [],
@@ -10,8 +13,11 @@ function ProductsProvider({ children }) {
   const [products, setProducts] = useState([]);
 
   useEffect(() => {
-    const sectionData = Array.from(shopData, (_) => _);
-    setProducts(sectionData);
+    async function getProducts() {
+      const products = await getCategoriesAndDocuments("categories");
+      setProducts(products);
+    }
+    getProducts();
   }, []);
 
   return (

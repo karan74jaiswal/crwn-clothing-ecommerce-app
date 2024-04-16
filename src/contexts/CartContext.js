@@ -1,4 +1,4 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 
 const addCartItem = function (cartItems, itemToAdd) {
   const doesItemExists = cartItems.some(
@@ -23,8 +23,17 @@ const CartContext = createContext({
   removeItem: () => {},
 });
 function CartProvider({ children }) {
-  const [cartItems, setCartItems] = useState([]);
+  const [cartItems, setCartItems] = useState(() => {
+    const temp = localStorage.getItem("cartItems");
+    if (!temp) return [];
+    return JSON.parse(temp);
+  });
   const [isCartVisible, setIsCartVisible] = useState(false);
+
+  useEffect(() => {
+    localStorage.setItem("cartItems", JSON.stringify(cartItems));
+  }, [cartItems]);
+
   const addToCart = function (item) {
     setCartItems(addCartItem(cartItems, item));
   };

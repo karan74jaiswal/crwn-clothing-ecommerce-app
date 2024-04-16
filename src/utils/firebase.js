@@ -7,6 +7,7 @@ import {
   doc,
   setDoc,
   writeBatch,
+  query,
 } from "firebase/firestore";
 import {
   getAuth,
@@ -79,7 +80,6 @@ const addUser = async (userAuthData, additionalData) => {
 // Getting all documents reference from a collection 'users' and their data at once
 const getAllUsersData = async () => {
   const users = await getDocs(collection(db, "users"));
-  console.log(users);
 };
 
 // Getting a single Document Data
@@ -108,6 +108,7 @@ const emailSignIn = async function (email, password) {
 const authStateChangeListener = (observerCallback) =>
   onAuthStateChanged(auth, observerCallback);
 
+// Only be using for single time. Generally its not done this frontend way.
 const addCollectionAndDocuments = async (collectionName, objects) => {
   if (!collectionName || !document) return;
   try {
@@ -122,6 +123,19 @@ const addCollectionAndDocuments = async (collectionName, objects) => {
     console.log(err.message);
   }
 };
+
+const getCategoriesAndDocuments = async function (collectionName) {
+  const collectionRef = collection(db, collectionName);
+  const querySnapShot = await getDocs(collectionRef);
+
+  const categoryMap = querySnapShot.docs.reduce((acc, doc) => {
+    const { items } = doc.data();
+    acc[doc.id] = items;
+    return acc;
+  }, {});
+  return categoryMap;
+};
+
 export {
   auth,
   signInWithGoogle,
@@ -134,4 +148,5 @@ export {
   emailSignIn,
   authStateChangeListener,
   addCollectionAndDocuments,
+  getCategoriesAndDocuments,
 };
