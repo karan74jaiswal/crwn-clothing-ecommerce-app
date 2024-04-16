@@ -6,6 +6,7 @@ import {
   getDoc,
   doc,
   setDoc,
+  writeBatch,
 } from "firebase/firestore";
 import {
   getAuth,
@@ -19,12 +20,12 @@ import {
 } from "firebase/auth";
 
 const firebaseConfig = {
-  apiKey: "AIzaSyCwvvWmLt-KTYL5PrdURary5e-f_OanmpM",
-  authDomain: "crwn-clothing-backend-688a3.firebaseapp.com",
-  projectId: "crwn-clothing-backend-688a3",
-  storageBucket: "crwn-clothing-backend-688a3.appspot.com",
-  messagingSenderId: "359088065774",
-  appId: "1:359088065774:web:427880d53d1d28ea26f7ff",
+  apiKey: process.env.REACT_APP_API_KEY,
+  authDomain: process.env.REACT_APP_AUTH_DOMAIN,
+  projectId: process.env.REACT_APP_PROJECT_ID,
+  storageBucket: process.env.REACT_APP_STORAGE_BUCKET,
+  messagingSenderId: process.env.REACT_APP_MESSAGING_SENDER_ID,
+  appId: process.env.REACT_APP_ID,
 };
 
 // Initialize Firebase
@@ -107,11 +108,16 @@ const emailSignIn = async function (email, password) {
 const authStateChangeListener = (observerCallback) =>
   onAuthStateChanged(auth, observerCallback);
 
-const addCollectionAndDocuments = async (collectionName, document, data) => {
+const addCollectionAndDocuments = async (collectionName, objects) => {
+  if (!collectionName || !document) return;
   try {
+    const batch = writeBatch(db);
     const collectionRef = collection(db, collectionName);
-    const documentRef = doc(collectionRef, document);
-    await setDoc(documentRef, data, { merge: true });
+    objects.forEach((object) => {
+      const documentRef = doc(collectionRef, object.title.toLowerCase());
+      batch.set(documentRef, object);
+    });
+    await batch.commit();
   } catch (err) {
     console.log(err.message);
   }
@@ -127,4 +133,5 @@ export {
   emailSignup,
   emailSignIn,
   authStateChangeListener,
+  addCollectionAndDocuments,
 };
