@@ -53,6 +53,7 @@ const getRedirectAuthResult = async function () {
   const user = await getRedirectResult(auth);
   return user;
 };
+
 // Creating Documents
 const addUser = async (userAuthData, additionalData) => {
   if (!userAuthData) return;
@@ -105,6 +106,16 @@ const emailSignIn = async function (email, password) {
 
 const authStateChangeListener = (observerCallback) =>
   onAuthStateChanged(auth, observerCallback);
+
+const addCollectionAndDocuments = async (collectionName, document, data) => {
+  try {
+    const collectionRef = collection(db, collectionName);
+    const documentRef = doc(collectionRef, document);
+    await setDoc(documentRef, data, { merge: true });
+  } catch (err) {
+    console.log(err.message);
+  }
+};
 export {
   auth,
   signInWithGoogle,
