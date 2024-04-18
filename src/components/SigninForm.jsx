@@ -1,8 +1,9 @@
 import AuthenticationForm from "./AuthenticationForm";
 import Button from "./Button";
 import useReducers from "../hooks/reducers/useReducers";
-import FileInput from "./FileInput";
 import { useAuth } from "../contexts/AuthorizationContext";
+import FormInput from "./FormInput";
+import { ButtonsContainer } from "./authenticationForm.styles";
 function SigninForm() {
   const { signInWithGoogle, emailSignIn } = useAuth();
   const { signInFormFields, handleChange, signinFormReset } = useReducers();
@@ -39,21 +40,21 @@ function SigninForm() {
       instruction="Sign in with your email and password"
       handleSubmit={handleSigninFormSubmit}
     >
-      <FileInput
+      <FormInput
         label="Email"
         labelFor="signinEmail"
         type="email"
         value={signInFormFields.email}
         handleChange={handleChange}
       />
-      <FileInput
+      <FormInput
         label="Password"
         labelFor="signinPassword"
         type="password"
         value={signInFormFields.password}
         handleChange={handleChange}
       />
-      <div className="buttons-container">
+      <ButtonsContainer>
         <Button type="submit">Sign In</Button>
         <Button
           type="button"
@@ -62,7 +63,7 @@ function SigninForm() {
         >
           Sign In With Google
         </Button>
-      </div>
+      </ButtonsContainer>
     </AuthenticationForm>
   );
 }

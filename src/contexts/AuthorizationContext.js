@@ -4,7 +4,6 @@ import {
   signInWithGoogle,
   signOut,
   addUser,
-  getAllUsersData,
   getUserData,
   getRedirectAuthResult,
   emailSignup,
@@ -48,7 +47,7 @@ function AuthorizationProvider({ children }) {
         auth,
         addUser,
         signUserOut,
-        getAllUsersData,
+
         getUserData,
         getRedirectAuthResult,
         userData,

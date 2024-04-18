@@ -1,8 +1,8 @@
 import AuthenticationForm from "./AuthenticationForm";
 import Button from "./Button";
 import useReducers from "../hooks/reducers/useReducers";
-import FileInput from "./FileInput";
 import { useAuth } from "../contexts/AuthorizationContext";
+import FormInput from "./FormInput";
 function SignupForm() {
   const { emailSignup, addUser } = useAuth();
   const { signUpFormFields, handleChange, signupFormReset } = useReducers();
@@ -31,37 +31,37 @@ function SignupForm() {
       instruction="Sign up with your email and password"
       handleSubmit={handleSignupFormSubmit}
     >
-      <FileInput
+      <FormInput
         label="Display Name"
         labelFor="display-name"
         type="text"
         value={signUpFormFields.displayName}
         handleChange={handleChange}
       />
-      <FileInput
+      <FormInput
         label="Email"
         labelFor="signupEmail"
         type="email"
         value={signUpFormFields.email}
         handleChange={handleChange}
       />
-      <FileInput
+      <FormInput
         label="Password"
         labelFor="signupPassword"
         type="password"
         value={signUpFormFields.password}
         handleChange={handleChange}
       />
-      <FileInput
+      <FormInput
         label="Retype Password"
         labelFor="retypedPassword"
         type="password"
         value={signUpFormFields.retypedPassword}
         handleChange={handleChange}
       />
-      <div className="buttons-container">
-        <Button type="submit">Sign up</Button>
-      </div>
+      {/* <div className="buttons-container"> */}
+      <Button type="submit">Sign up</Button>
+      {/* </div> */}
     </AuthenticationForm>
   );
 }

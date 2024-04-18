@@ -1,15 +1,20 @@
-import "./cart-item.scss";
+import {
+  CartItemContainer,
+  ItemDetails,
+  ItemName,
+  ItemTotal,
+} from "./cart-item.styles";
 function CartItem({ item }) {
   return (
-    <div className="cart-item-container">
+    <CartItemContainer>
       <img src={item.imageUrl} alt={item.name} />
-      <div className="item-details">
-        <span className="name">{item.name}</span>
-        <span>
+      <ItemDetails>
+        <ItemName>{item.name}</ItemName>
+        <ItemTotal>
           {item.quantity} x ${item.price}
-        </span>
-      </div>
-    </div>
+        </ItemTotal>
+      </ItemDetails>
+    </CartItemContainer>
   );
 }
 

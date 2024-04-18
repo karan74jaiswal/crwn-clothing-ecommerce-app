@@ -1,36 +1,35 @@
-import "./navigation.styles.scss";
-import { NavLink } from "react-router-dom";
+import {
+  NavigationContainer,
+  LogoContainer,
+  NavLinksContainer,
+  Navlink,
+} from "./navigation.styles";
 import { useAuth } from "../contexts/AuthorizationContext";
 import { ReactComponent as CrownLogo } from "../assets/crown.svg";
 import CartDropDown from "./CartDropDown";
 import CartIcon from "./CartIcon";
 
 export default function Navigation() {
-  const { userAuthObject, signUserOut, userData } = useAuth();
+  const { userAuthObject, signUserOut } = useAuth();
 
   return (
-    <nav className="navigation">
-      <NavLink to="/" className="logo-container">
+    <NavigationContainer>
+      <LogoContainer to="/">
         <CrownLogo className="logo" />
-      </NavLink>
+      </LogoContainer>
 
-      <div className="nav-links-container">
-        <NavLink className="nav-link" to="/shop">
-          SHOP
-        </NavLink>
+      <NavLinksContainer>
+        <Navlink to="/shop">SHOP</Navlink>
         {!userAuthObject ? (
-          <NavLink className="nav-link" to="/signin">
-            SIGN IN
-          </NavLink>
+          <Navlink to="/signin">SIGN IN</Navlink>
         ) : (
-          <span className="nav-link" onClick={signUserOut}>
+          <Navlink as="span" onClick={signUserOut}>
             SIGN OUT
-          </span>
+          </Navlink>
         )}
-        {userData ? <p className="nav-link">{userData.displayName}</p> : ""}
         <CartIcon />
-      </div>
+      </NavLinksContainer>
       <CartDropDown />
-    </nav>
+    </NavigationContainer>
   );
 }

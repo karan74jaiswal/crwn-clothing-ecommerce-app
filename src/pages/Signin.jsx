@@ -3,7 +3,7 @@ import { useAuth } from "../contexts/AuthorizationContext";
 import { useEffect } from "react";
 import SignupForm from "../components/SignupForm";
 import SigninForm from "../components/SigninForm";
-import "./signin.scss";
+import { AuthenticationContainer } from "./signin.styles.jsx";
 function Signin() {
   const { userAuthObject } = useAuth();
   const navigate = useNavigate();
@@ -13,10 +13,10 @@ function Signin() {
   }, [userAuthObject, navigate]);
 
   return (
-    <div className="authentication-container">
+    <AuthenticationContainer>
       <SigninForm />
       <SignupForm />
-    </div>
+    </AuthenticationContainer>
   );
 }
 

@@ -1,9 +1,9 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import AppLayout from "./pages/AppLayout";
-import Categories from "./components/Categories";
+import Categories from "./pages/Categories";
 import Signin from "./pages/Signin";
 import Shop from "./pages/Shop";
-import Section from "./components/Section";
+import Section from "./pages/Section";
 import { AuthorizationProvider } from "./contexts/AuthorizationContext";
 import { ProductsProvider } from "./contexts/ProductsContext";
 import { CartProvider } from "./contexts/CartContext";

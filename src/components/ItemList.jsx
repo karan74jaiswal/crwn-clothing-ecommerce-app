@@ -1,12 +1,12 @@
 import Item from "./Item";
-import "./itemList.scss";
-function ItemList({ items, className }) {
+import { ItemListContainer } from "./itemList.styles.jsx";
+function ItemList({ items }) {
   return (
-    <ul className={`item-list ${className}`}>
+    <ItemListContainer>
       {items?.map((item) => (
         <Item key={item.id} item={item} />
       ))}
-    </ul>
+    </ItemListContainer>
   );
 }
 

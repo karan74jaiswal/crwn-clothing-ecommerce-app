@@ -7,7 +7,6 @@ import {
   doc,
   setDoc,
   writeBatch,
-  query,
 } from "firebase/firestore";
 import {
   getAuth,
@@ -77,11 +76,6 @@ const addUser = async (userAuthData, additionalData) => {
   }
 };
 
-// Getting all documents reference from a collection 'users' and their data at once
-const getAllUsersData = async () => {
-  const users = await getDocs(collection(db, "users"));
-};
-
 // Getting a single Document Data
 const getUserData = async function (userAuthData) {
   const collectionRef = collection(db, "users");
@@ -141,7 +135,6 @@ export {
   signInWithGoogle,
   signOut,
   addUser,
-  getAllUsersData,
   getUserData,
   getRedirectAuthResult,
   emailSignup,

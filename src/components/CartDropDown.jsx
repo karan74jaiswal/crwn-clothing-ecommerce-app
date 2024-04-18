@@ -1,35 +1,37 @@
-import "./cart-dropdown.scss";
+// import "./cart-dropdown.scss";
 import Button from "./Button";
 import { useCart } from "../contexts/CartContext";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "../contexts/AuthorizationContext";
 import CartItem from "./CartItem";
+import {
+  CartDropDownContainer,
+  Message,
+  CartItems,
+} from "./cartDropDown.styles";
 
 function CartDropDown() {
   const navigate = useNavigate();
-  const { userAuthObject } = useAuth();
   const { cartItems, isCartVisible, toggleCartOpen } = useCart();
-  if (!isCartVisible) return;
-  console.log(cartItems);
 
   const handleCheckout = function () {
     toggleCartOpen();
-    // navigate(`/${!userAuthObject ? "signin" : "checkout"}`);
     navigate("/checkout");
   };
+
+  if (!isCartVisible) return;
   return (
-    <div className="cart-dropdown-container">
+    <CartDropDownContainer>
       {!cartItems.length ? (
-        <span className="empty-message">Your Cart is empty</span>
+        <Message>Your Cart is empty</Message>
       ) : (
-        <div className="cart-items">
+        <CartItems>
           {cartItems.map((item) => (
             <CartItem item={item} key={item.id} />
           ))}
-        </div>
+        </CartItems>
       )}
       <Button onClick={handleCheckout}>GO TO CHECKOUT</Button>
-    </div>
+    </CartDropDownContainer>
   );
 }
 

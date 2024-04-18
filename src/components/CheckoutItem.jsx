@@ -1,40 +1,42 @@
 import { useCart } from "../contexts/CartContext";
-import "./checkoutItem.scss";
-function CheckoutItem({ item, className }) {
-  const { increaseQuantity, decreaseQuantity, removeItem } = useCart();
-  return (
-    <div className={className || "item-container"}>
-      {!item ? (
-        <>
-          <span className="header-block">Product</span>
-          <span className="header-block">Description</span>
-          <span className="header-block">Quantity</span>
-          <span className="header-block">Price</span>
-          <span className="header-block">Remove</span>
-        </>
-      ) : (
-        <>
-          <span className="image-container">
-            <img src={item.imageUrl} alt={item.name} />
-          </span>
-          <span className="name">{item.name}</span>
-          <span className="quantity">
-            <span className="arrow" onClick={() => decreaseQuantity(item)}>
-              &#10094;
-            </span>
-            <span className="value">{item.quantity}</span>
-            <span className="arrow" onClick={() => increaseQuantity(item)}>
-              &#10095;
-            </span>
-          </span>
-          <span className="price">{item.price}</span>
+import {
+  CheckoutHeader,
+  HeaderBlock,
+  ItemContainer,
+  ImageContainer,
+  ItemDetails,
+  Quantity,
+  Arrow,
+  Count,
+  RemoveButton,
+} from "./checkoutItem.styles.jsx";
 
-          <span className="remove-button" onClick={() => removeItem(item.id)}>
-            &#10005;
-          </span>
-        </>
-      )}
-    </div>
+function CheckoutItem({ item, type }) {
+  const { increaseQuantity, decreaseQuantity, removeItem } = useCart();
+  return type ? (
+    <CheckoutHeader>
+      <HeaderBlock>Product</HeaderBlock>
+      <HeaderBlock>Description</HeaderBlock>
+      <HeaderBlock>Quantity</HeaderBlock>
+      <HeaderBlock>Price</HeaderBlock>
+      <HeaderBlock>Remove</HeaderBlock>
+    </CheckoutHeader>
+  ) : (
+    <ItemContainer>
+      <ImageContainer>
+        <img src={item.imageUrl} alt={item.name} />
+      </ImageContainer>
+      <ItemDetails>{item.name}</ItemDetails>
+      <Quantity>
+        <Arrow onClick={() => decreaseQuantity(item)}>&#10094;</Arrow>
+        <Count>{item.quantity}</Count>
+
+        <Arrow onClick={() => increaseQuantity(item)}>&#10095;</Arrow>
+      </Quantity>
+      <ItemDetails>{item.price}</ItemDetails>
+
+      <RemoveButton onClick={() => removeItem(item.id)}>&#10005;</RemoveButton>
+    </ItemContainer>
   );
 }
 

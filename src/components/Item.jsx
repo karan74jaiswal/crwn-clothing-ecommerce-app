@@ -1,21 +1,28 @@
-import "./itemList.scss";
+import {
+  ProductCard,
+  ProductImage,
+  ProductDetails,
+  ProductName,
+  ProductPrice,
+} from "./item.styles";
 import Button from "./Button";
 import { useCart } from "../contexts/CartContext";
+
 function Item({ item }) {
   const { addToCart } = useCart();
 
   const addProductToCart = () => addToCart(item);
   return (
-    <li className="item">
-      <img src={item.imageUrl} className="item-image" alt={item.name} />
-      <Button className="inverted add-to-cart-btn" onClick={addProductToCart}>
+    <ProductCard>
+      <ProductImage src={item.imageUrl} alt={item.name} />
+      <Button className="inverted" onClick={addProductToCart}>
         Add to cart
       </Button>
-      <div className="item-details">
-        <span className="item-name">{item.name}</span>
-        <span className="item-price">{item.price}</span>
-      </div>
-    </li>
+      <ProductDetails>
+        <ProductName>{item.name}</ProductName>
+        <ProductPrice>{item.price}</ProductPrice>
+      </ProductDetails>
+    </ProductCard>
   );
 }
 
