@@ -1,1 +1,4 @@
-/* index.html 200
+[[redirects]]
+  from = "/*"
+  to = "https://crwn-clothing-fashion.netlify.app/"
+  status = 200
