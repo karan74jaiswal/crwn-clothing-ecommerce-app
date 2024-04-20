@@ -1,4 +1,4 @@
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, useContext, useEffect } from "react";
 import {
   auth,
   signInWithGoogle,
@@ -10,13 +10,13 @@ import {
   emailSignIn,
   authStateChangeListener,
 } from "../utils/firebase";
+import useUserReducer from "../reducers/userReducer";
 import { useNavigate } from "react-router-dom";
 const AuthorizationContext = createContext();
 
 function AuthorizationProvider({ children }) {
   const navigate = useNavigate();
-  const [userAuthObject, setUserAuthObject] = useState(null);
-  const [userData, setUserData] = useState(null);
+  const { userAuthObject, userData, dispatch } = useUserReducer();
 
   const signUserOut = async function () {
     await signOut(auth);
@@ -26,32 +26,29 @@ function AuthorizationProvider({ children }) {
   useEffect(() => {
     const unsubscribe = authStateChangeListener(async (user) => {
       if (user) {
-        setUserAuthObject(user);
+        dispatch({ type: "setUserAuthObject", payload: user });
         const data = await getUserData(user);
-        setUserData(data);
+        dispatch({ type: "setUserData", payload: data });
       } else {
-        setUserAuthObject(null);
-        setUserData(null);
+        dispatch({ type: "setUserAuthObject", payload: null });
+        dispatch({ type: "setUserData", payload: null });
       }
     });
 
     return unsubscribe;
-  }, []);
+  }, [dispatch]);
 
   return (
     <AuthorizationContext.Provider
       value={{
         signInWithGoogle,
         userAuthObject,
-        setUserAuthObject,
         auth,
         addUser,
         signUserOut,
-
         getUserData,
         getRedirectAuthResult,
         userData,
-        setUserData,
         emailSignup,
         emailSignIn,
       }}
