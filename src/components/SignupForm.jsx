@@ -1,11 +1,12 @@
 import AuthenticationForm from "./AuthenticationForm";
 import Button from "./Button";
-import useReducers from "../hooks/reducers/useReducers";
+import useSignupReducer from "../reducers/signupReducer";
 import { useAuth } from "../contexts/AuthorizationContext";
 import FormInput from "./FormInput";
 function SignupForm() {
   const { emailSignup, addUser } = useAuth();
-  const { signUpFormFields, handleChange, signupFormReset } = useReducers();
+  const { signUpFormFields, handleChange, signupFormReset } =
+    useSignupReducer();
   const handleSignupFormSubmit = async function (e) {
     e.preventDefault();
     const { displayName, email, password, retypedPassword } = signUpFormFields;

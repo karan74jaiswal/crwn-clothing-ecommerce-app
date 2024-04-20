@@ -1,5 +1,5 @@
 import { useReducer } from "react";
-const signupReducer = (state, action) => {
+const reducer = (state, action) => {
   switch (action.type) {
     case "changeDisplayName":
       return { ...state, displayName: action.payload };
@@ -20,29 +20,13 @@ const signupReducer = (state, action) => {
       return "Wrong Action Type Passed, No such type Exists";
   }
 };
-const signinReducer = (state, action) => {
-  switch (action.type) {
-    case "changeEmail":
-      return { ...state, email: action.payload };
-    case "changePassword":
-      return { ...state, password: action.payload };
-    case "reset":
-      return { email: "", password: "" };
-    default:
-      return "Wrong Action Type Passed, No such type Exists";
-  }
-};
 
-const useReducers = function () {
-  const [signUpFormFields, signupDispatch] = useReducer(signupReducer, {
+function useSignupReducer() {
+  const [signUpFormFields, signupDispatch] = useReducer(reducer, {
     displayName: "",
     email: "",
     password: "",
     retypedPassword: "",
-  });
-  const [signInFormFields, signinDispatch] = useReducer(signinReducer, {
-    email: "",
-    password: "",
   });
 
   const handleChange = (e) => {
@@ -58,32 +42,17 @@ const useReducers = function () {
         type: "changeretypedPassword",
         payload,
       });
-    if (e.target.name === "signinEmail")
-      signinDispatch({
-        type: "changeEmail",
-        payload,
-      });
-    if (e.target.name === "signinPassword")
-      signinDispatch({
-        type: "changePassword",
-        payload,
-      });
   };
 
   const signupFormReset = () => {
     signupDispatch({ type: "reset" });
   };
-  const signinFormReset = () => {
-    signinDispatch({ type: "reset" });
-  };
 
   return {
-    signInFormFields,
     signUpFormFields,
     handleChange,
     signupFormReset,
-    signinFormReset,
   };
-};
+}
 
-export default useReducers;
+export default useSignupReducer;

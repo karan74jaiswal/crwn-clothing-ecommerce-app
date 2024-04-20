@@ -11,7 +11,7 @@ function FormInput({ label, labelFor, handleChange, value, type }) {
         id={labelFor}
         name={labelFor}
       />
-      <InputLabel htmlFor={labelFor} shrink={value.length}>
+      <InputLabel htmlFor={labelFor} $shrink={value.length}>
         {label}
       </InputLabel>
     </Group>
