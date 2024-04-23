@@ -23,11 +23,11 @@ function App() {
                   <Route path="shop" element={<Shop />} />
                   <Route path="shop/:category" element={<Section />} />
                   <Route path="checkout" element={<Checkout />} />
-                  <Route
-                    path="*"
-                    element={<h1>Error 404 ----- Page does not exist</h1>}
-                  />
                 </Route>
+                <Route
+                  path="*"
+                  element={<h1>Error 404 ----- Page does not exist</h1>}
+                />
               </Routes>
             </Suspense>
           </CartProvider>
