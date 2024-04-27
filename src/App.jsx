@@ -3,6 +3,10 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AuthorizationProvider } from "./contexts/AuthorizationContext";
 import { ProductsProvider } from "./contexts/ProductsContext";
 import { CartProvider } from "./contexts/CartContext";
+import {
+  StyledSpinnerContainer,
+  StyledSpinner,
+} from "./components/StyledSpinner";
 const AppLayout = lazy(() => import("./pages/AppLayout"));
 const Categories = lazy(() => import("./pages/Categories"));
 const Signin = lazy(() => import("./pages/Signin"));
@@ -15,7 +19,13 @@ function App() {
       <AuthorizationProvider>
         <ProductsProvider>
           <CartProvider>
-            <Suspense fallback={<h1>...Loading...</h1>}>
+            <Suspense
+              fallback={
+                <StyledSpinnerContainer>
+                  <StyledSpinner />
+                </StyledSpinnerContainer>
+              }
+            >
               <Routes>
                 <Route path="/" element={<AppLayout />}>
                   <Route index element={<Categories />} />
