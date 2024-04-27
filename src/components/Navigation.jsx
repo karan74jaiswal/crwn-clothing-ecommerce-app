@@ -4,14 +4,21 @@ import {
   NavLinksContainer,
   Navlink,
 } from "./navigation.styles";
-import { useAuth } from "../contexts/AuthorizationContext";
+
+import { signUserOut } from "../utils/firebase";
 import { ReactComponent as CrownLogo } from "../assets/crown.svg";
 import CartDropDown from "./CartDropDown";
 import CartIcon from "./CartIcon";
+import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 export default function Navigation() {
-  const { userAuthObject, signUserOut } = useAuth();
-
+  const navigate = useNavigate();
+  const { userAuthObject } = useSelector((store) => store.user);
+  const handleSignOut = function () {
+    signUserOut();
+    navigate("/");
+  };
   return (
     <NavigationContainer>
       <LogoContainer to="/">
@@ -23,7 +30,7 @@ export default function Navigation() {
         {!userAuthObject ? (
           <Navlink to="/signin">SIGN IN</Navlink>
         ) : (
-          <Navlink as="span" onClick={signUserOut}>
+          <Navlink as="span" onClick={handleSignOut}>
             SIGN OUT
           </Navlink>
         )}

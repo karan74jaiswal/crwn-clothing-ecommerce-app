@@ -130,6 +130,8 @@ const getCategoriesAndDocuments = async function (collectionName) {
   return categoryMap;
 };
 
+const signUserOut = async () => await signOut(auth);
+
 export {
   auth,
   signInWithGoogle,
@@ -142,4 +144,5 @@ export {
   authStateChangeListener,
   addCollectionAndDocuments,
   getCategoriesAndDocuments,
+  signUserOut,
 };

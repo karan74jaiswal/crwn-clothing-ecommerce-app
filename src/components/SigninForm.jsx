@@ -1,12 +1,10 @@
 import AuthenticationForm from "./AuthenticationForm";
 import Button from "./Button";
-// import useReducers from "../hooks/reducers/useReducers";
 import useSigninReducer from "../reducers/signinReducer";
-import { useAuth } from "../contexts/AuthorizationContext";
 import FormInput from "./FormInput";
 import { ButtonsContainer } from "./authenticationForm.styles";
+import { signInWithGoogle, emailSignIn } from "../utils/firebase";
 function SigninForm() {
-  const { signInWithGoogle, emailSignIn } = useAuth();
   const { signInFormFields, handleChange, signinFormReset } =
     useSigninReducer();
   const handleSigninFormSubmit = async function (e) {

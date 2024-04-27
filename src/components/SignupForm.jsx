@@ -1,10 +1,9 @@
 import AuthenticationForm from "./AuthenticationForm";
 import Button from "./Button";
 import useSignupReducer from "../reducers/signupReducer";
-import { useAuth } from "../contexts/AuthorizationContext";
 import FormInput from "./FormInput";
+import { emailSignup, addUser } from "../utils/firebase";
 function SignupForm() {
-  const { emailSignup, addUser } = useAuth();
   const { signUpFormFields, handleChange, signupFormReset } =
     useSignupReducer();
   const handleSignupFormSubmit = async function (e) {
