@@ -1,13 +1,4 @@
-function getCachedCartItems() {
-  const temp = localStorage.getItem("cartItems");
-  if (temp) {
-    const parsedItems = JSON.parse(temp);
-    return parsedItems;
-  }
-  return [];
-}
-
-const initialState = { cartItems: getCachedCartItems(), isCartVisible: false };
+const initialState = { cartItems: [], isCartVisible: false };
 
 const cartReducer = function (state = initialState, action) {
   const { cartItems, isCartVisible } = state;
