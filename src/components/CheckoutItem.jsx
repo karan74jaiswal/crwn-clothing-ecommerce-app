@@ -1,4 +1,10 @@
-import { useCart } from "../contexts/CartContext";
+import {
+  increaseQuantity,
+  decreaseQuantity,
+  removeItem,
+} from "../features/cart/cartSlice.js";
+import { useDispatch } from "react-redux";
+
 import {
   CheckoutHeader,
   HeaderBlock,
@@ -12,7 +18,7 @@ import {
 } from "./checkoutItem.styles.jsx";
 
 function CheckoutItem({ item, type }) {
-  const { increaseQuantity, decreaseQuantity, removeItem } = useCart();
+  const dispatch = useDispatch();
   return type ? (
     <CheckoutHeader>
       <HeaderBlock>Product</HeaderBlock>
@@ -28,14 +34,16 @@ function CheckoutItem({ item, type }) {
       </ImageContainer>
       <ItemDetails>{item.name}</ItemDetails>
       <Quantity>
-        <Arrow onClick={() => decreaseQuantity(item)}>&#10094;</Arrow>
+        <Arrow onClick={() => dispatch(decreaseQuantity(item))}>&#10094;</Arrow>
         <Count>{item.quantity}</Count>
 
-        <Arrow onClick={() => increaseQuantity(item)}>&#10095;</Arrow>
+        <Arrow onClick={() => dispatch(increaseQuantity(item))}>&#10095;</Arrow>
       </Quantity>
       <ItemDetails>{item.price}</ItemDetails>
 
-      <RemoveButton onClick={() => removeItem(item.id)}>&#10005;</RemoveButton>
+      <RemoveButton onClick={() => dispatch(removeItem(item.id))}>
+        &#10005;
+      </RemoveButton>
     </ItemContainer>
   );
 }

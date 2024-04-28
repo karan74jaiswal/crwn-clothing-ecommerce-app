@@ -1,6 +1,7 @@
-// import "./cart-dropdown.scss";
 import Button from "./Button";
-import { useCart } from "../contexts/CartContext";
+import { useSelector, useDispatch } from "react-redux";
+import cartSelector from "../features/cart/cartSelector";
+import { toggleCartOpen } from "../features/cart/cartSlice";
 import { useNavigate } from "react-router-dom";
 import CartItem from "./CartItem";
 import {
@@ -11,14 +12,14 @@ import {
 
 function CartDropDown() {
   const navigate = useNavigate();
-  const { cartItems, isCartVisible, toggleCartOpen } = useCart();
-
-  const handleCheckout = function () {
-    toggleCartOpen();
-    navigate("/checkout");
-  };
+  const dispatch = useDispatch();
+  const { cartItems, isCartVisible } = useSelector(cartSelector);
 
   if (!isCartVisible) return;
+  const handleCheckout = function () {
+    dispatch(toggleCartOpen());
+    navigate("/checkout");
+  };
   return (
     <CartDropDownContainer>
       {!cartItems.length ? (

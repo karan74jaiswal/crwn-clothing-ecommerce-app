@@ -6,12 +6,13 @@ import {
   ProductPrice,
 } from "./item.styles";
 import Button from "./Button";
-import { useCart } from "../contexts/CartContext";
+import { addToCart } from "../features/cart/cartSlice";
+import { useDispatch } from "react-redux";
 
 function Item({ item }) {
-  const { addToCart } = useCart();
+  const dispatch = useDispatch();
 
-  const addProductToCart = () => addToCart(item);
+  const addProductToCart = () => dispatch(addToCart(item));
   return (
     <ProductCard>
       <ProductImage src={item.imageUrl} alt={item.name} />
@@ -20,7 +21,7 @@ function Item({ item }) {
       </Button>
       <ProductDetails>
         <ProductName>{item.name}</ProductName>
-        <ProductPrice>{item.price}</ProductPrice>
+        <ProductPrice>${item.price}</ProductPrice>
       </ProductDetails>
     </ProductCard>
   );

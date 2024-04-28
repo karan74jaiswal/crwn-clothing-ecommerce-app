@@ -1,13 +1,13 @@
 import { Navigate } from "react-router-dom";
-import { useCart } from "../contexts/CartContext";
 import CheckoutItem from "../components/CheckoutItem";
 import { CheckoutContainer, BillContainer } from "./checkout.styles.jsx";
 import Button from "../components/Button";
 import { useSelector } from "react-redux";
 import currentUserSelector from "../features/user/userSelector.js";
+import cartSelector from "../features/cart/cartSelector.js";
 function Checkout() {
   const { userAuthObject: user } = useSelector(currentUserSelector);
-  const { cartItems } = useCart();
+  const { cartItems } = useSelector(cartSelector);
   if (!user) return <Navigate to="/signin" replace />;
   return (
     <CheckoutContainer>

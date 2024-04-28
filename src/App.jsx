@@ -6,7 +6,6 @@ import {
   getUserData,
   getCategoriesAndDocuments,
 } from "./utils/firebase";
-import { CartProvider } from "./contexts/CartContext";
 import {
   StyledSpinnerContainer,
   StyledSpinner,
@@ -21,6 +20,8 @@ const Signin = lazy(() => import("./pages/Signin"));
 const Shop = lazy(() => import("./pages/Shop"));
 const Section = lazy(() => import("./pages/Section"));
 const Checkout = lazy(() => import("./pages/Checkout"));
+
+// Main App Routes
 function App() {
   const dispatch = useDispatch();
 
@@ -49,29 +50,27 @@ function App() {
 
   return (
     <BrowserRouter>
-      <CartProvider>
-        <Suspense
-          fallback={
-            <StyledSpinnerContainer>
-              <StyledSpinner />
-            </StyledSpinnerContainer>
-          }
-        >
-          <Routes>
-            <Route path="/" element={<AppLayout />}>
-              <Route index element={<Categories />} />
-              <Route path="signin" element={<Signin />} />
-              <Route path="shop" element={<Shop />} />
-              <Route path="shop/:category" element={<Section />} />
-              <Route path="checkout" element={<Checkout />} />
-            </Route>
-            <Route
-              path="*"
-              element={<h1>Error 404 ----- Page does not exist</h1>}
-            />
-          </Routes>
-        </Suspense>
-      </CartProvider>
+      <Suspense
+        fallback={
+          <StyledSpinnerContainer>
+            <StyledSpinner />
+          </StyledSpinnerContainer>
+        }
+      >
+        <Routes>
+          <Route path="/" element={<AppLayout />}>
+            <Route index element={<Categories />} />
+            <Route path="signin" element={<Signin />} />
+            <Route path="shop" element={<Shop />} />
+            <Route path="shop/:category" element={<Section />} />
+            <Route path="checkout" element={<Checkout />} />
+          </Route>
+          <Route
+            path="*"
+            element={<h1>Error 404 ----- Page does not exist</h1>}
+          />
+        </Routes>
+      </Suspense>
     </BrowserRouter>
   );
 }
