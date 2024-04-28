@@ -4,7 +4,7 @@ import { Fragment } from "react";
 import { useSelector } from "react-redux";
 import categorySelector from "../features/categories/categorySelector.js";
 function Shop() {
-  const products = useSelector(categorySelector);
+  const { categories: products } = useSelector(categorySelector);
 
   return (
     <CategoryPreviewContainer>

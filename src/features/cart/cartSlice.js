@@ -54,9 +54,9 @@ const removeItem = (itemId) => ({ type: "cart/removeItem", payload: itemId });
 const increaseQuantity = (item) => (dispatch) => dispatch(addToCart(item));
 
 const decreaseQuantity = (item) => {
-  if (item.quantity > 1) {
+  if (item.quantity > 1)
     return { type: "cart/decreaseItemCount", payload: item };
-  }
+
   return (dispatch) => dispatch(removeItem(item.id));
 };
 const toggleCartOpen = () => ({ type: "cart/toggleCartVisibility" });

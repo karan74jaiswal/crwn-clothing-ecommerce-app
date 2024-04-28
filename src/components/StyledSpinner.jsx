@@ -4,7 +4,7 @@ import styled from "styled-components";
 const StyledSpinnerContainer = styled.div`
   display: flex;
   justify-content: center;
-  height: 90vh;
+  height: 85vh;
   align-items: center;
 `;
 

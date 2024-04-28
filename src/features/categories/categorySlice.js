@@ -1,5 +1,8 @@
+import { getCategoriesAndDocuments } from "../../utils/firebase";
+
 const initialStateCategories = {
   categories: [],
+  isLoading: false,
 };
 
 const categoriesReducer = function (state = initialStateCategories, action) {
@@ -8,6 +11,12 @@ const categoriesReducer = function (state = initialStateCategories, action) {
       return {
         ...state,
         categories: action.payload,
+        isLoading: false,
+      };
+    case "categories/setIsLoading":
+      return {
+        ...state,
+        isLoading: true,
       };
     default:
       return state;
@@ -15,12 +24,18 @@ const categoriesReducer = function (state = initialStateCategories, action) {
 };
 
 // Action Creators
-const setCategories = function (categories) {
-  return {
-    type: "categories/setCategories",
-    payload: categories,
+const setCategoriesAsync = function () {
+  return async (dispatch) => {
+    dispatch({
+      type: "categories/setIsLoading",
+    });
+    const products = await getCategoriesAndDocuments("categories");
+    dispatch({
+      type: "categories/setCategories",
+      payload: products,
+    });
   };
 };
 
 export default categoriesReducer;
-export { setCategories };
+export { setCategoriesAsync };
