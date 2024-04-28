@@ -11,10 +11,10 @@ import CartDropDown from "./CartDropDown";
 import CartIcon from "./CartIcon";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-
+import currentUserSelector from "../features/user/userSelector";
 export default function Navigation() {
   const navigate = useNavigate();
-  const { userAuthObject } = useSelector((store) => store.user);
+  const { userAuthObject } = useSelector(currentUserSelector);
   const handleSignOut = function () {
     signUserOut();
     navigate("/");

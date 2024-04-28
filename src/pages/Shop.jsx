@@ -1,9 +1,10 @@
-import { useProducts } from "../contexts/ProductsContext";
 import ItemList from "../components/ItemList";
 import { CategoryPreviewContainer, Title } from "./shop.styles.jsx";
 import { Fragment } from "react";
+import { useSelector } from "react-redux";
+import categorySelector from "../features/categories/categorySelector.js";
 function Shop() {
-  const { products } = useProducts();
+  const products = useSelector(categorySelector);
 
   return (
     <CategoryPreviewContainer>

@@ -4,9 +4,9 @@ import SignupForm from "../components/SignupForm";
 import SigninForm from "../components/SigninForm";
 import { AuthenticationContainer } from "./signin.styles.jsx";
 import { useSelector } from "react-redux";
-
+import currentUserSelector from "../features/user/userSelector.js";
 function Signin() {
-  const { userAuthObject } = useSelector((store) => store.user);
+  const { userAuthObject } = useSelector(currentUserSelector);
   const navigate = useNavigate();
 
   useEffect(() => {

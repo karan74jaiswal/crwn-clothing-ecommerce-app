@@ -1,10 +1,11 @@
 import { useParams } from "react-router-dom";
 import ItemList from "../components/ItemList.jsx";
 import { SectionContainer, SectionHeading } from "./section.styles.jsx";
-import { useProducts } from "../contexts/ProductsContext.js";
+import { useSelector } from "react-redux";
+import categorySelector from "../features/categories/categorySelector.js";
 function Section() {
   const { category } = useParams();
-  const { products } = useProducts();
+  const products = useSelector(categorySelector);
 
   return (
     <SectionContainer>

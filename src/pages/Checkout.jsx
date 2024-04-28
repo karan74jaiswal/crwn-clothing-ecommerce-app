@@ -4,8 +4,9 @@ import CheckoutItem from "../components/CheckoutItem";
 import { CheckoutContainer, BillContainer } from "./checkout.styles.jsx";
 import Button from "../components/Button";
 import { useSelector } from "react-redux";
+import currentUserSelector from "../features/user/userSelector.js";
 function Checkout() {
-  const { userAuthObject: user } = useSelector((store) => store.user);
+  const { userAuthObject: user } = useSelector(currentUserSelector);
   const { cartItems } = useCart();
   if (!user) return <Navigate to="/signin" replace />;
   return (
